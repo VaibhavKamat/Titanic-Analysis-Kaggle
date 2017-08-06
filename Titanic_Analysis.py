@@ -111,24 +111,27 @@ data.Age[data.Pclass == 1].plot(kind='kde')
 data.Age[data.Pclass == 2].plot(kind='kde')
 data.Age[data.Pclass == 3].plot(kind='kde')
 plt.xlabel("Age")    
-plt.title("Age Distribution (Kernel Density Estimation) within classes")
+plt.title("Age Distribution (Kernel Density Estimation) Within Classes")
 plt.legend(('1st Class', '2nd Class','3rd Class')) 
+plt.show()
+
+
+#############################################################################################
+total_survived=(data['Survived']).sum()
+print "Number of people survived are:%d"%(total_survived)
 
 data_by_pclass=data.groupby('Pclass')
 total = data_by_pclass['Survived'].count()
 survived = data_by_pclass['Survived'].sum()
 not_survived = total-survived
-print total
-print survived
-print not_survived
 
 width=0.3
 index=np.arange(3)
 fig,ax=plt.subplots()
 colour=[]
-rects1=ax.bar(index,total,width,color='red')
+rects1=ax.bar(index,total,width,color='blue')
 rects2=ax.bar(index+width,survived,width,color='green')
-rects3=ax.bar(index+2*width,not_survived,width,color='blue')
+rects3=ax.bar(index+2*width,not_survived,width,color='red')
 ax.set_xticks(index+width)
 ax.set_xticklabels(('Class1','Class2','Class3'))
 ax.legend((rects1[0],rects2[0],rects3[0]),('Total','Survived','Not Survived'),loc='best')
