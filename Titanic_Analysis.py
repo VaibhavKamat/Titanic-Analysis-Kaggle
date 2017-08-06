@@ -33,7 +33,7 @@ def autolabel(rects):
     '''
     for rect in rects:
         h=rect.get_height()
-        plt.text(rect.get_x()+0.2,1.1*h,int(h),ha='center',va='bottom')
+        plt.text(rect.get_x()+0.15,0.6*h,int(h),ha='center',va='bottom',color='white',size=12)
     
     
         
