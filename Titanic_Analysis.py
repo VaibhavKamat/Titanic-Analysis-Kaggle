@@ -42,6 +42,7 @@ def autolabel(rects,x=0.15,y=0.6):
 
     
 data = pd.read_csv("titanic_data.csv")# Input from the Titanic data CSV file
+
 # Age distribution within the passenger classes (Kernel Density Estimation)     
 ax1 = plt.subplot2grid((3,3),(0,0),colspan=3)
 data.Age[data.Pclass == 1].plot(kind='kde',color='blue')    
@@ -93,6 +94,14 @@ for i in range(len(embarked)):
     plt.text(embarked[i],i,embarked[i],color='blue',size=12)
 plt.title("Number of people onboard Titanic based on port of Embarkation",size=14)
 plt.show()
+
+# The data type of the crew members features is a string (with cabin numbers) or float with nan value
+# The number of nan values is 204, which is the number of crew members in the data
+c= 0
+for datum in data['Cabin']:
+    if type(datum)!=float:
+        c+=1
+print '\n \nThe number of crew members in the data is %d \n\n'%(c)       
 #########################################################################################################################
 
 # Number Of People And Those Survived, Grouped By The Passenger Class
