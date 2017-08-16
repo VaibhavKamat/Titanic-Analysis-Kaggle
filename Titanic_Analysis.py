@@ -26,12 +26,12 @@ def get_crew_data(data):
                 s+=1
     return c,s
     
-def autolabel(rects,x=0.15,y=0.6):
+def autolabel(rects,x=0.15,y=0.6,color='white',size=12):
     '''Labels the bar graphs according to the height of the bars
     '''
     for rect in rects:
         h = rect.get_height()
-        plt.text(rect.get_x()+x,y*h,int(h),ha='center',va='bottom',color='white',size=12)
+        plt.text(rect.get_x()+x,y*h,int(h),ha='center',va='bottom',color=color,size=size)
 
 
 
@@ -129,3 +129,50 @@ autolabel(rects2)
 autolabel(rects3)
 plt.show()
 
+
+
+
+# Number of males and females who survived, grouped according to the passenger class
+data_by_pclass = data.groupby(['Pclass','Sex'])
+males_onboard = []
+females_onboard = []
+
+for i in range(1,4):
+    females_onboard.append(data_by_pclass['Survived'].sum()[i][0])
+    males_onboard.append(data_by_pclass['Survived'].sum()[i][1])
+    
+fig,ax = plt.subplots()
+rects1 = ax.bar(index,females_onboard,width,color='brown')
+rects2 = ax.bar(index+width,males_onboard,width,color='orange')      
+ax.set_xticks(index+width)
+ax.set_xticklabels(('Class1','Class2','Class3'))
+ax.legend((rects1[0],rects2[0]),('Females','Males'),loc='best')
+plt.title("Number of males and females who survived, grouped according to the passenger class",size=14)
+autolabel(rects1)
+autolabel(rects2)
+plt.show()
+print """This suggests the number of males survived in all three classes where lower than that of females, \
+which means women were given more preference, in the rescue operations."""
+
+
+
+#Number of people and those survived, according to the age groups
+data_by_age=data.groupby(pd.cut(data['Age'],[0,12,18,40,60,100]))
+total_by_age = np.array(data_by_age['Survived'].count())
+survived_by_age = np.array(data_by_age['Survived'].sum())
+
+print survived_by_age
+print total_by_age
+
+width = 0.3
+index = np.arange(5)
+fig,ax = plt.subplots()
+rects1 = ax.bar(index,total_by_age,width,color='blue')
+rects2 = ax.bar(index+width,survived_by_age,width,color='green')
+ax.set_xticks(index+width)
+ax.set_xticklabels(('0-12','12-18','18-40','40-60','60-100'))
+ax.legend((rects1[0],rects2[0]),('Total','Survived'),loc='best')
+plt.title("Total number of people and those survived, according to the age groups",size=14)
+autolabel(rects1,0.2,1,color='black',size=15)
+autolabel(rects2,0.2,1,color='black',size=15)
+plt.show()
