@@ -113,7 +113,6 @@ total = data_by_pclass['Survived'].count()
 survived = data_by_pclass['Survived'].sum()
 not_survived = total-survived
 
-width = 0.3
 index = np.arange(3)
 fig,ax = plt.subplots()
 
@@ -161,10 +160,6 @@ data_by_age=data.groupby(pd.cut(data['Age'],[0,12,18,40,60,100]))
 total_by_age = np.array(data_by_age['Survived'].count())
 survived_by_age = np.array(data_by_age['Survived'].sum())
 
-print survived_by_age
-print total_by_age
-
-width = 0.3
 index = np.arange(5)
 fig,ax = plt.subplots()
 rects1 = ax.bar(index,total_by_age,width,color='blue')
@@ -175,4 +170,52 @@ ax.legend((rects1[0],rects2[0]),('Total','Survived'),loc='best')
 plt.title("Total number of people and those survived, according to the age groups",size=14)
 autolabel(rects1,0.2,1,color='black',size=15)
 autolabel(rects2,0.2,1,color='black',size=15)
+plt.show()
+
+
+
+# displaying how many survived in different passenger classes, among men and women
+data_by_pclass = data.groupby(['Pclass','Sex'])
+males_onboard = []
+females_onboard = []
+males_survived = []
+females_survived = []
+
+for i in range(1,4):
+    females_onboard.append(data_by_pclass['Survived'].count()[i][0])
+    females_survived.append(data_by_pclass['Survived'].sum()[i][0])
+    males_onboard.append(data_by_pclass['Survived'].count()[i][1])
+    males_survived.append(data_by_pclass['Survived'].sum()[i][0])
+    
+    
+print males_onboard
+print males_survived
+print females_onboard
+print females_survived
+
+index = np.arange(3)
+ax2 = plt.subplot2grid((2,2),(0,0),colspan=2)   
+rects1 = ax2.bar(index,females_onboard,width,color='blue')
+rects2 = ax2.bar(index+width,females_survived,width,color='green')      
+ax2.set_xticks(index+width)
+ax2.set_xticklabels(('Class1','Class2','Class3'))
+ax2.legend((rects1[0],rects2[0]),('Total','Survived'),loc='best')
+plt.title("Number of females onboard the Titanic and those survived, grouped according to the passenger \
+class",size=14)
+autolabel(rects1,0.15,0.3)
+autolabel(rects2,0.15,0.2)
+plt.show()
+
+
+ax2 = plt.subplot2grid((2,2),(0,0),colspan=2)   
+rects1 = ax2.bar(index,males_onboard,width,color='blue')
+rects2 = ax2.bar(index+width,males_survived,width,color='green')      
+ax2.set_xticks(index+width)
+ax2.set_xticklabels(('Class1','Class2','Class3'))
+ax2.legend((rects1[0],rects2[0]),('Total','Survived'),loc='best')
+plt.title("Number of males onboard the Titanic and those survived, grouped according to the passenger \
+class",size=14)
+ax2.set_ylim(0,400)
+autolabel(rects1,0.15,0.3)
+autolabel(rects2,0.15,0.2)
 plt.show()
