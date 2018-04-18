@@ -185,7 +185,7 @@ for i in range(1,4):
     females_onboard.append(data_by_pclass['Survived'].count()[i][0])
     females_survived.append(data_by_pclass['Survived'].sum()[i][0])
     males_onboard.append(data_by_pclass['Survived'].count()[i][1])
-    males_survived.append(data_by_pclass['Survived'].sum()[i][0])
+    males_survived.append(data_by_pclass['Survived'].sum()[i][1])
     
     
 print males_onboard
